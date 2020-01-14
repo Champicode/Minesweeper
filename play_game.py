@@ -1,6 +1,6 @@
 import sys
-from sources.play_turn import play_turn
-from sources.draw_board import game_board
+from play_turn import play_turn
+from draw_board import game_board
 
 class play_game(game_board):
 
@@ -15,7 +15,6 @@ class play_game(game_board):
             #self.board = new_board
 
     def play_turn(self):
-
         x = int(input())-1
         y = int(input())-1
 
@@ -31,12 +30,13 @@ class play_game(game_board):
         if x < 0 or x > self.x_size-1 or y < 0 or y > self.y_size-1:
             return False
 
-        if self.board[x][y] != "?":
-            return False
-
         if self.board[x][y] == "*":
             print("Lost")
+            sys.exit()
             return True
+
+        if self.board[x][y] != "?":
+            return False
 
         bomb_around = self.check_bomb(x, y)
         self.board[x][y] = bomb_around
