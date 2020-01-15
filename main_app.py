@@ -10,12 +10,13 @@ from play_game import play_game, play_game2
 
 class MainApp:
 
-    def __init__(self):
+    def __init__(self, x_size, y_size, nb_bombs):
         root = tk.Tk()
         root.title = 'TITLE'
 
-        x_size = 8
-        y_size = 8
+        self.x_size = x_size
+        self.y_size = y_size
+        self.nb_bombs = nb_bombs
 
         self.grid = []
         for i in range(0, x_size):
@@ -47,7 +48,7 @@ class MainApp:
 
     def start_game(self):
 
-        self.game = play_game2(x_size=8, y_size=8, nb_bombs=10)
+        self.game = play_game2(self.x_size, self.y_size, self.nb_bombs)
         self.game.print_game_2D()
 
     def right_click(self, event):
@@ -140,5 +141,9 @@ class MainApp:
         if self.move_left == 0:
             self.game.print_win()
 
-MainApp()
+x_size = 8
+y_size = 8
+nb_bombs = 10
+
+MainApp(x_size = x_size, y_size = y_size, nb_bombs = nb_bombs)
 
