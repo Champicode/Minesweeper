@@ -6,4 +6,4 @@ from sources.play_game import play_game
 #print_game_2D(game.board)
 #play_game(game)
 
-play_game(x_size = 10, y_size = 10)
+play_game(x_size=10, y_size=10)

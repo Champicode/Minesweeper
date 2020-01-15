@@ -1,6 +1,7 @@
-from array import *
+import time
 from random import seed
-from random import randint
+from random import randint, randrange
+import sys
 
 #Return a 2 dimension array containing the game board
 
@@ -23,14 +24,14 @@ class game_board:
         self.add_bombs()
 
     def add_bombs(self):
-        seed(1)
+        seed(int(time.time()))
         for _ in range(0, self.nb_bombs):
             x = randint(0, self.x_size-1)
             y = randint(0, self.y_size-1)
             self.board[x][y] = '*'
 
     def print_game_2D(self):
-        print('#############################')
+        print('#'*self.x_size*3)
         for r in self.board:
             print("#   ", end=" ")
             for c in r:
@@ -38,6 +39,14 @@ class game_board:
 
             print("   #", end="")
             print()
-        print('#############################')
+        print('#' * self.x_size*3)
         #Here add all the graphics properties and stuff to print it nicely from a 2D array
+
+    def print_lost(self):
+        print("You loose")
+        #sys.exit()
+
+    def print_win(self):
+        print("You won")
+        #sys.exit()
 
