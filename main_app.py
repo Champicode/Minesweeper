@@ -17,6 +17,7 @@ class MainApp:
         self.x_size = x_size
         self.y_size = y_size
         self.nb_bombs = nb_bombs
+        a = 10
 
         self.grid = []
         for i in range(0, x_size):
