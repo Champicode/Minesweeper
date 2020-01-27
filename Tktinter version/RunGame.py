@@ -1,9 +1,11 @@
-from draw_board import game_board
+from DrawBoard import GameBoard
+from PIL import Image, ImageTk
 
-class play_game(game_board):
+
+class PlayGameInput(GameBoard):
 
     def __init__(self, x_size, y_size, nb_bombs):
-        game_board.__init__(self, x_size, y_size, nb_bombs)
+        GameBoard.__init__(self, x_size, y_size, nb_bombs)
         self.move_left = x_size*y_size - nb_bombs
         self.print_game_2D()
         self.start()
@@ -73,31 +75,32 @@ class play_game(game_board):
 
         return X, Y
 
-class play_game2(game_board):
+class PlayGameGraphic(GameBoard):
 
     def __init__(self, x_size, y_size, nb_bombs):
-        game_board.__init__(self, x_size, y_size, nb_bombs)
+        GameBoard.__init__(self, x_size, y_size, nb_bombs)
         self.move_left = x_size*y_size - nb_bombs
 
-    def update_board(self, x, y):
+    def UpdateBoard(self, x, y):
 
         if x < 0 or x > self.x_size or y < 0 or y > self.y_size:
             return False
 
         if self.board[x][y] == "*":
-            self.print_lost()
+            self.PrintLost()
+            return True
 
         if self.board[x][y] != "?":
             return False
 
-        bomb_around = self.check_bomb(x, y)
+        bomb_around = self.CheckBomb(x, y)
         self.board[x][y] = bomb_around
 
         if bomb_around == 0:
-            X, Y = self.check_border(x, y)
+            X, Y = self.CheckBorder(x, y)
             for i in X:
                 for j in Y:
-                    self.update_board(i, j)
+                    self.UpdateBoard(i, j)
 
         return False
 
@@ -125,10 +128,8 @@ class play_game2(game_board):
 
         return True
 
-
-
-    def check_bomb(self, x, y):
-        X, Y = self.check_border(x, y)
+    def CheckBomb(self, x, y):
+        X, Y = self.CheckBorder(x, y)
         bomb_around = 0
         for i in X:
             for j in Y:
@@ -137,14 +138,20 @@ class play_game2(game_board):
         self.move_left -= 1
         return bomb_around
 
-    def check_border(self, x, y):
+    def CheckBorder(self, x, y):
         X = [x-1, x, x+1]
         Y = [y-1, y, y+1]
-        X = X[1:]  if x == 0 else X             #Top border
+        X = X[1:] if x == 0 else X             #Top border
         X = X[:-1] if x == self.x_size-1 else X   #Bottom border
-        Y = Y[1:]  if y == 0 else Y             #Left border
+        Y = Y[1:] if y == 0 else Y             #Left border
         Y = Y[:-1] if y == self.y_size-1 else Y   #Right border
 
         return X, Y
+
+    def PrintLost(self):
+        print('Lost')
+
+    def PrintWin(self):
+        print('Win')
 
 #play_game(x_size=8, y_size=8, nb_bombs=10)
